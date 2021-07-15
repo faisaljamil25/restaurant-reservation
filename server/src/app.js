@@ -29,5 +29,7 @@ db.once('open', (_) => {
 app.get('/', (req, res) => {
   res.send('Hello to Restaurant.');
 });
+app.use('/availability', require('./routes/availabilityRoute'));
+app.use('/reserve', require('./routes/reservationRoute'));
 
 module.exports = app;
