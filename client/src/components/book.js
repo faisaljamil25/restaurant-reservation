@@ -92,7 +92,7 @@ const Book = (props) => {
     if (selection.time && selection.date) {
       (async (_) => {
         let datetime = getDate();
-        let res = await fetch('http://localhost:3005/availability', {
+        let res = await fetch(`${process.env.REACT_APP_BACKEND}/availability`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -127,7 +127,7 @@ const Book = (props) => {
       setReservationError(true);
     } else {
       const datetime = getDate();
-      let res = await fetch('http://localhost:3005/reserve', {
+      let res = await fetch(`${process.env.REACT_APP_BACKEND}/reserve`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -271,7 +271,6 @@ const Book = (props) => {
     <div className={classes.root}>
       <Grid
         container
-        direction='row'
         justifyContent='center'
         alignItems='center'
         className='text-center align-items-center pizza-cta'
@@ -308,7 +307,6 @@ const Book = (props) => {
         <div id='reservation-stuff'>
           <Grid
             container
-            direction='row'
             justifyContent='center'
             alignItems='center'
             className='text-center align-items-center'
@@ -408,7 +406,6 @@ const Book = (props) => {
           </Grid>
           <Grid
             container
-            direction='row'
             justifyContent='center'
             alignItems='center'
             className='tables-display'
@@ -429,12 +426,7 @@ const Book = (props) => {
                       <span className='full-table'></span> &nbsp; Unavailable
                       &nbsp;&nbsp;
                     </div>
-                    <Grid
-                      container
-                      direction='row'
-                      justifyContent='center'
-                      alignItems='center'
-                    >
+                    <Grid container justifyContent='center' alignItems='center'>
                       {getTables()}
                     </Grid>
                   </div>
@@ -455,7 +447,6 @@ const Book = (props) => {
         <div id='confirm-reservation-stuff'>
           <Grid
             container
-            direction='row'
             justifyContent='center'
             alignItems='center'
             className='text-center justify-content-center reservation-details-container'
@@ -505,7 +496,6 @@ const Book = (props) => {
           </Grid>
           <Grid
             container
-            direction='row'
             justifyContent='center'
             alignItems='center'
             className='text-center'
