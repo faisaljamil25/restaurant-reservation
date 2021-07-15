@@ -2,7 +2,6 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import { Button, Typography } from '@material-ui/core';
-import LocalPizzaIcon from '@material-ui/icons/LocalPizza';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,7 +17,7 @@ const Main = ({ setPage }) => {
         <Grid item xs={12}>
           <Typography>
             If you're looking for great pizza
-            <LocalPizzaIcon />
+            <i className='fas fa-pizza-slice pizza-slice'></i>
           </Typography>
           <Button
             color='inherit'
