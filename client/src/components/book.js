@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import { Button, Typography } from '@material-ui/core';
+import { Box, Button, Typography } from '@material-ui/core';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Table from './table';
@@ -9,6 +9,84 @@ import Table from './table';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+  },
+  bookTable: {
+    padding: theme.spacing(2),
+    margin: theme.spacing(2),
+  },
+  booking: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingBottom: theme.spacing(1),
+  },
+  bookingDropdown: {
+    width: '85%',
+    padding: '4% 0',
+    backgroundColor: 'red',
+    color: 'white',
+    margin: '2% 0',
+    fontFamily: 'Roboto',
+    fontSize: '1.1rem',
+    border: 'none,',
+    borderRadius: '5px',
+    textAlign: 'center',
+    '&:hover': {
+      backgroundColor: 'red',
+      color: 'white',
+    },
+    '&:focus': {
+      outline: 'none',
+      boxShadow: 'none',
+    },
+    '&-menu': {
+      outline: 'none',
+    },
+
+    '&-item:hover': {
+      backgroundColor: 'white',
+    },
+
+    '&-item:active': {
+      backgroundColor: 'white',
+      color: 'black',
+    },
+  },
+  bookButton: {
+    margin: theme.spacing(2),
+  },
+  tableDisplay: {
+    backgroundColor: 'red',
+    margin: '10% 2%',
+    padding: '3% 5%',
+    borderRadius: '25px',
+  },
+  tableCount: {
+    color: 'rgb(255, 255, 255)',
+    fontFamily: 'Roboto, sans-serif',
+  },
+  tableKey: {
+    paddingTop: '1%',
+    paddingBottom: '4.5%',
+    color: 'white',
+  },
+  fullTable: {
+    backgroundColor: 'white',
+    border: 'solid 2px white',
+    // border: 'solid 2px rgba(245, 246, 250, 0.4)',
+    borderRadius: '50%',
+    padding: '1px 10px',
+    margin: '3px',
+  },
+  emptyTable: {
+    backgroundColor: 'red',
+    border: 'solid 2px white',
+    borderRadius: '50%',
+    padding: '1px 10px',
+    margin: '3px',
+  },
+  tableDisplayMsg: {
+    color: 'white',
   },
 }));
 
@@ -163,7 +241,6 @@ const Book = (props) => {
       newSizes.push(
         <MenuItem
           key={i}
-          className='booking-dropdown-item'
           onClick={(e) => {
             let newSel = {
               ...selection,
@@ -189,7 +266,6 @@ const Book = (props) => {
       newLocations.push(
         <MenuItem
           key={loc}
-          className='booking-dropdown-item'
           onClick={(_) => {
             let newSel = {
               ...selection,
@@ -215,7 +291,6 @@ const Book = (props) => {
       newTimes.push(
         <MenuItem
           key={time}
-          className='booking-dropdown-item'
           onClick={(_) => {
             let newSel = {
               ...selection,
@@ -273,11 +348,13 @@ const Book = (props) => {
         container
         justifyContent='center'
         alignItems='center'
-        className='text-center align-items-center pizza-cta'
+        className={classes.bookTable}
       >
         <Grid item xs={12}>
-          <Typography className='looking-for-pizza'>
-            {!selection.table.id ? 'Book a Table' : 'Confirm Reservation'}
+          <Box className={classes.booking}>
+            <Typography variant='h4'>
+              {!selection.table.id ? 'Book a Table' : 'Confirm Reservation'}
+            </Typography>
             <i
               className={
                 !selection.table.id
@@ -285,37 +362,37 @@ const Book = (props) => {
                   : 'fas fa-clipboard-check pizza-slice'
               }
             ></i>
-          </Typography>
-          <Typography className='selected-table'>
-            {selection.table.id
-              ? 'You are booking table ' + selection.table.name
-              : null}
-          </Typography>
-
-          {reservationError ? (
-            <Typography className='reservation-error'>
-              * Please fill out all of the details.
+          </Box>
+          <Box className={classes.booking}>
+            <Typography variant='h4'>
+              {selection.table.id
+                ? 'You are booking table ' + selection.table.name
+                : null}
             </Typography>
-          ) : null}
+          </Box>
+          <Box className={classes.booking}>
+            {reservationError ? (
+              <Typography variant='h4'>
+                * Please fill out all of the details.
+              </Typography>
+            ) : null}
+          </Box>
         </Grid>
         <Grid item xs={12}>
-          <img src='/cafe.jpg' alt='cafe' />
+          <Box className={classes.booking}>
+            <img src='/cafe.jpg' alt='cafe' width='500px' />
+          </Box>
         </Grid>
       </Grid>
 
       {!selection.table.id ? (
         <div id='reservation-stuff'>
-          <Grid
-            container
-            justifyContent='center'
-            alignItems='center'
-            className='text-center align-items-center'
-          >
+          <Grid container justifyContent='center' alignItems='center'>
             <Grid item xs={12} sm={3}>
               <input
                 type='date'
                 required='required'
-                className='booking-dropdown'
+                className={classes.bookingDropdown}
                 value={selection.date.toISOString().split('T')[0]}
                 onChange={(e) => {
                   if (!isNaN(new Date(new Date(e.target.value)))) {
@@ -343,7 +420,7 @@ const Book = (props) => {
             </Grid>
             <Grid item xs={12} sm={3}>
               <Button
-                className='booking-dropdown'
+                className={classes.bookingDropdown}
                 aria-controls='time-menu'
                 aria-haspopup='true'
                 onClick={(event) => setTimeAnchor(event.currentTarget)}
@@ -356,14 +433,13 @@ const Book = (props) => {
                 keepMounted
                 open={Boolean(timeAnchor)}
                 onClose={() => setTimeAnchor(null)}
-                className='booking-dropdown-menu'
               >
                 {getTimes()}
               </Menu>
             </Grid>
             <Grid item xs={12} sm={3}>
               <Button
-                className='booking-dropdown'
+                className={classes.bookingDropdown}
                 aria-controls='location-menu'
                 aria-haspopup='true'
                 onClick={(event) => setLocationAnchor(event.currentTarget)}
@@ -376,14 +452,13 @@ const Book = (props) => {
                 keepMounted
                 open={Boolean(locationAnchor)}
                 onClose={() => setLocationAnchor(null)}
-                className='booking-dropdown-menu'
               >
                 {getLocations()}
               </Menu>
             </Grid>
             <Grid item xs={12} sm={3}>
               <Button
-                className='booking-dropdown'
+                className={classes.bookingDropdown}
                 aria-controls='size-menu'
                 aria-haspopup='true'
                 onClick={(event) => setSizeAnchor(event.currentTarget)}
@@ -398,7 +473,6 @@ const Book = (props) => {
                 keepMounted
                 open={Boolean(sizeAnchor)}
                 onClose={() => setSizeAnchor(null)}
-                className='booking-dropdown-menu'
               >
                 {getSizes()}
               </Menu>
@@ -408,11 +482,11 @@ const Book = (props) => {
             container
             justifyContent='center'
             alignItems='center'
-            className='tables-display'
+            className={classes.tableDisplay}
           >
             <Grid item xs={12}>
               {getEmptyTables() > 0 ? (
-                <Typography className='available-tables'>
+                <Typography className={classes.tableCount}>
                   {getEmptyTables()} available
                 </Typography>
               ) : null}
@@ -420,23 +494,23 @@ const Book = (props) => {
               {selection.date && selection.time ? (
                 getEmptyTables() > 0 ? (
                   <div>
-                    <div className='table-key'>
-                      <span className='empty-table'></span> &nbsp; Available
-                      &nbsp;&nbsp;
-                      <span className='full-table'></span> &nbsp; Unavailable
-                      &nbsp;&nbsp;
+                    <div className={classes.tableKey}>
+                      <span className={classes.emptyTable}></span> &nbsp;
+                      Available &nbsp;&nbsp;
+                      <span className={classes.fullTable}></span> &nbsp;
+                      Unavailable &nbsp;&nbsp;
                     </div>
                     <Grid container justifyContent='center' alignItems='center'>
                       {getTables()}
                     </Grid>
                   </div>
                 ) : (
-                  <Typography className='table-display-message'>
+                  <Typography className={classes.tableDisplayMsg}>
                     No Available Tables
                   </Typography>
                 )
               ) : (
-                <Typography className='table-display-message'>
+                <Typography className={classes.tableDisplayMsg}>
                   Please select a date and time for your reservation.
                 </Typography>
               )}
@@ -449,13 +523,12 @@ const Book = (props) => {
             container
             justifyContent='center'
             alignItems='center'
-            className='text-center justify-content-center reservation-details-container'
+            spacing={3}
           >
-            <Grid item xs={12} sm={3} className='reservation-details'>
+            <Grid item xs={12} sm={3}>
               <input
                 type='text'
                 placeholder='Name'
-                className='reservation-input'
                 value={booking.name}
                 onChange={(e) => {
                   setBooking({
@@ -465,11 +538,10 @@ const Book = (props) => {
                 }}
               />
             </Grid>
-            <Grid xs='12' sm='3' className='reservation-details'>
+            <Grid xs={12} sm={3}>
               <input
                 type='text'
                 placeholder='Phone Number'
-                className='reservation-input'
                 value={booking.phone}
                 onChange={(e) => {
                   setBooking({
@@ -479,11 +551,10 @@ const Book = (props) => {
                 }}
               />
             </Grid>
-            <Grid xs='12' sm='3' className='reservation-details'>
+            <Grid xs={12} sm={3}>
               <input
                 type='text'
                 placeholder='Email'
-                className='reservation-input'
                 value={booking.email}
                 onChange={(e) => {
                   setBooking({
@@ -494,24 +565,18 @@ const Book = (props) => {
               />
             </Grid>
           </Grid>
-          <Grid
-            container
-            justifyContent='center'
-            alignItems='center'
-            className='text-center'
-          >
-            <Grid item xs={12}>
-              <Button
-                color='transparent'
-                className='book-table-btn'
-                onClick={(_) => {
-                  reserve();
-                }}
-              >
-                Book Now
-              </Button>
-            </Grid>
-          </Grid>
+          <Box display='flex' justifyContent='center' alignItems='center'>
+            <Button
+              variant='contained'
+              color='secondary'
+              className={classes.bookButton}
+              onClick={(_) => {
+                reserve();
+              }}
+            >
+              Book Now
+            </Button>
+          </Box>
         </div>
       )}
     </div>

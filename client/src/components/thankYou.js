@@ -6,9 +6,9 @@ const Thankyou = () => {
     <div>
       <Grid container justifyContent='center' alignItems='center' spacing={3}>
         <Grid item xs={12}>
-          <Typography className='thanks-header'>Thank You!</Typography>
+          <Typography>Thank You!</Typography>
           <i className='fas fa-pizza-slice thank-you-pizza'></i>
-          <Typography className='thanks-subtext'>
+          <Typography>
             You should receive an email with the details of your reservation.
           </Typography>
         </Grid>
